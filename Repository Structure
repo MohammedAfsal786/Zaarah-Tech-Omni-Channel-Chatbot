@@ -1,0 +1,21 @@
+zaarah-bot/
+├─ app.py
+├─ config.py
+├─ requirements.txt
+├─ .env.example
+├─ /adapters
+│ ├─ nlp_openai.py
+│ ├─ nlp_dialogflow.py
+│ ├─ nlp_rasa.py
+│ ├─ channel_facebook.py # covers FB Messenger + IG via Meta
+│ ├─ channel_whatsapp_meta.py
+│ ├─ channel_whatsapp_twilio.py
+│ └─ channel_telegram.py
+├─ /db
+│ ├─ models.py
+│ └─ seed.sql
+├─ /static
+│ ├─ widget.css
+│ └─ widget.js
+└─ /templates
+└─ widget.html
