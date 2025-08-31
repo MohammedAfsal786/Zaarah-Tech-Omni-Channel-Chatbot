@@ -1,0 +1,7 @@
+[Web Widget]──┐
+│ ┌──────────────┐
+[FB/IG (Meta)]─┼──HTTP──▶│ Flask API │──▶ [NLP Adapters: Dialogflow / Rasa / OpenAI]
+│ └──────┬───────┘
+[WhatsApp]────┤ │
+│ ▼
+[Telegram]─────┘ [PostgreSQL/MySQL]
