@@ -1,0 +1,46 @@
+# Flask
+FLASK_ENV=production
+SECRET_KEY=supersecret
+PORT=8080
+BASE_URL=https://your-domain.com
+
+
+# Database
+DB_URL=postgresql+psycopg2://user:pass@host:5432/zaarah
+# or: mysql+pymysql://user:pass@host:3306/zaarah
+
+
+# OpenAI (optional)
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-4o-mini
+
+
+# Dialogflow (optional)
+GOOGLE_APPLICATION_CREDENTIALS=/path/to/sa-key.json
+DIALOGFLOW_PROJECT_ID=
+DIALOGFLOW_LANGUAGE_CODE=en
+
+
+# Rasa (optional)
+RASA_URL=http://localhost:5005/webhooks/rest/webhook
+
+
+# Meta (Facebook/Instagram)
+META_VERIFY_TOKEN=verify_zaarah
+META_PAGE_ACCESS_TOKEN=
+# set IG in the same Meta app; IG uses Messenger API under the hood
+
+
+# WhatsApp (Meta Cloud)
+WA_CLOUD_TOKEN=
+WA_PHONE_NUMBER_ID=
+
+
+# WhatsApp (Twilio alt)
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_WHATSAPP_NUMBER=whatsapp:+1415XXXXXXX
+
+
+# Telegram
+TELEGRAM_BOT_TOKEN=
