@@ -1,0 +1,49 @@
+# Open ai (nlp-openai.py)
+import os
+from openai import OpenAI
+
+
+client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+MODEL = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')
+
+
+SYSTEM = """
+You are Zaarah Tech's helpful assistant. Be concise. If user asks about courses, fees, schedules, trainers, or registration, collect name, email, phone politely if not known. Offer brochure link when asked.
+"""
+
+
+def generate_reply(history):
+# history: list of {role, content}
+msgs = [{"role": "system", "content": SYSTEM}] + history
+resp = client.chat.completions.create(model=MODEL, messages=msgs)
+return resp.choices[0].message.content
+
+#Diagflow (nlp-diagflow.py)
+import dialogflow_v2 as dialogflow
+import os
+
+
+project_id = os.getenv('DIALOGFLOW_PROJECT_ID')
+language_code = os.getenv('DIALOGFLOW_LANGUAGE_CODE', 'en')
+
+
+sessions_client = dialogflow.SessionsClient()
+
+
+def detect_intent_texts(session_id, text):
+session = sessions_client.session_path(project_id, session_id)
+text_input = dialogflow.types.TextInput(text=text, language_code=language_code)
+query_input = dialogflow.types.QueryInput(text=text_input)
+response = sessions_client.detect_intent(session=session, query_input=query_input)
+
+#Rasa(nlp-rasa.py)
+import os, requests
+RASA_URL = os.getenv('RASA_URL')
+
+
+def rasa_reply(sender_id, text):
+r = requests.post(f"{RASA_URL}", json={"sender": sender_id, "message": text}, timeout=15)
+if r.ok and r.json():
+return "\n".join([m.get("text","") for m in r.json() if m.get("text")])
+return ""
+return response.query_result.fulfillment_text or response.query_result.intent.display_name
