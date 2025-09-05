@@ -1,0 +1,56 @@
+from sqlalchemy import create_engine, Column, Integer, String, Text, JSON, TIMESTAMP
+from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.sql import func
+import os
+
+
+DB_URL = os.getenv('DB_URL')
+engine = create_engine(DB_URL, pool_pre_ping=True)
+SessionLocal = sessionmaker(bind=engine, expire_on_commit=False)
+Base = declarative_base()
+
+
+class Lead(Base):
+__tablename__ = 'leads'
+id = Column(Integer, primary_key=True)
+name = Column(String(120))
+phone = Column(String(50))
+email = Column(String(120))
+channel = Column(String(40), nullable=True)
+meta = Column(JSON)
+created_at = Column(TIMESTAMP, server_default=func.now())
+
+
+class FAQ(Base):
+__tablename__ = 'faq'
+id = Column(Integer, primary_key=True)
+question = Column(String(255), nullable=False)
+answer = Column(Text, nullable=False)
+tags = Column(String(120))
+lang = Column(String(10), default='en')
+
+
+class Transcript(Base):
+__tablename__ = 'transcripts'
+id = Column(Integer, primary_key=True)
+user_id = Column(String(120))
+channel = Column(String(40), nullable=False)
+direction = Column(String(10), nullable=False)
+message = Column(Text, nullable=False)
+payload = Column(JSON)
+created_at = Column(TIMESTAMP, server_default=func.now())
+
+
+class SessionCtx(Base):
+__tablename__ = 'sessions'
+id = Column(Integer, primary_key=True)
+user_id = Column(String(120), unique=True, nullable=False)
+channel = Column(String(40), nullable=False)
+context = Column(JSON)
+updated_at = Column(TIMESTAMP, server_default=func.now(), onupdate=func.now())
+
+
+
+
+def init_db():
+Base.metadata.create_all(engine)
